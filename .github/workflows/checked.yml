@@ -1,20 +1,14 @@
 name: check
 on: [push, pull_request]
-permissions: {}
+permissions:
+  contents: read
 jobs:
-  manifests:
+  repository:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: verify every plugin manifest declares required metadata
-        run: |
-          set -eu
-          count=0
-          while IFS= read -r m; do
-            count=$((count+1))
-            echo "checking $m"
-            for key in '^id =' '^name =' '^version =' '^min_herdr_version ='; do
-              grep -Eq "$key" "$m" || { echo "$m missing $key"; exit 1; }
-            done
-          done < <(find . -name herdr-plugin.toml -not -path '*/node_modules/*')
-          [ "$count" -ge 1 ] && echo "validated $count plugin manifest(s)"
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Validate manifests, install paths and mocked CLI integration
+        run: python3 -m unittest discover -s tests -v

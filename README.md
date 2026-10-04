@@ -1,25 +1,38 @@
-# howdr-plugs
+# herdr-plugins
 
-Community Herdr plugins published as a single **monorepo** owned by `ezou…`. Each plugin lives in its own subdirectory and is independently installable; the repository is tagged with the GitHub topic `herdr-plugin`, so any plugin installs straight from GitHub.
+Personal Herdr plugins by [ezoushen](https://github.com/ezoushen), maintained in one monorepo. Each plugin has its own manifest and can be installed separately.
 
-## Install any plugin (by subdir)
+| Plugin | Dependency | Install |
+| --- | --- | --- |
+| [Browser Trigger](browser-trigger/) | `terminal-browser` executable | `herdr plugin install ezoushen/herdr-plugins/browser-trigger` |
 
-```bash
-herdr plugin install ezou…/howdr-plugs/how-to-browser
+## Install
 
-# Pin a specific revision:
-herdr plugin install ezou…/howdr-plugs/how-to-browser --ref <sha> --yes
+```sh
+herdr plugin install ezoushen/herdr-plugins/browser-trigger
+# Optionally pin a published commit or tag:
+herdr plugin install ezoushen/herdr-plugins/browser-trigger --ref <revision>
 ```
 
-## Plugins
+Installing one subdirectory registers only that plugin, not every plugin in this repository. Herdr may clone the whole repository to resolve the selected subdirectory.
 
-| Subdir | Description | Install |
-|---|---|---|
-| [`how-to-browser`](how-to-browser/) | Open clickable URLs in an in-terminal browser; cmd+click opens your system browser. Requires the `terminal-browser` engine. | `herdr plugin install ezou…/howdr-plugs/how-to-browser` |
+## Develop
 
-## Requirements to be listed on the marketplace
-- Repository tagged with GitHub topic `herdr-plugin`.
-- Each plugin ships its own `herdr-plugin.toml` (with `id`, `name`, `version`, `min_herdr_version`).
-- Root `README.md` documents the install pattern (this file).
+```sh
+git clone https://github.com/ezoushen/herdr-plugins.git
+cd herdr-plugins
+sh browser-trigger/bin/build-engine.sh
+herdr plugin link ./browser-trigger
+```
 
-Contribute: add a subdir with a `herdr-plugin.toml` and a `README.md`, then open a pull request.
+If a GitHub-installed copy with the same ID already exists, uninstall it before linking the local copy. Linking does not run build checks automatically.
+
+Each future plugin belongs in its own directory with `herdr-plugin.toml` and `README.md`. The public repository uses the GitHub topic `herdr-plugin` for marketplace discovery.
+
+## Checks
+
+```sh
+python3 -m unittest discover -s tests -v
+```
+
+These checks validate repository structure and mocked CLI calls; they do not prove live browser rendering or mouse gestures.

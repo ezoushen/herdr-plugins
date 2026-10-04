@@ -1,0 +1,35 @@
+id = "ezoushen.browser-trigger"
+name = "Browser Trigger"
+version = "0.1.0"
+min_herdr_version = "0.8.2"
+description = "Open HTTP(S) links supplied by Herdr in a browser split. Requires the separately installed terminal-browser executable."
+platforms = ["macos", "linux"]
+
+# Install-time commands run in this directory without runtime plugin context.
+[[build]]
+platforms = ["macos", "linux"]
+command = ["sh", "bin/build-engine.sh"]
+
+[[panes]]
+id = "browser"
+title = "Browser Trigger"
+placement = "split"
+command = ["sh", "bin/pane.sh"]
+
+[[actions]]
+id = "open-pane"
+title = "Open browser split"
+contexts = ["global", "pane"]
+command = ["sh", "bin/open-pane.sh"]
+
+[[actions]]
+id = "open-url"
+title = "Open HTTP(S) URL in browser split"
+contexts = ["global", "pane"]
+command = ["sh", "bin/open_url.sh"]
+
+[[link_handlers]]
+id = "http"
+title = "Open HTTP(S) link in browser split"
+pattern = "^https?://"
+action = "open-url"
