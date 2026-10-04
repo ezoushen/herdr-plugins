@@ -2,11 +2,11 @@
 
 Local Browser — open clickable URLs in an in-terminal browser; **cmd+click opens your system browser**.
 
-### Install (from the `ezouen/howdr-plugs` monorepo)
+### Install (from the `ezou…/howdr-plugs` monorepo)
 
 ```bash
-herdr plugin install ezouen/howdr-plugs/how-to-browser
-herdr plugin install ezouen/howdr-plugs/how-to-browser --ref <sha> --yes    # pin a revision
+herdr plugin install ezou…/howdr-plugs/how-to-browser
+herdr plugin install ezou…/howdr-plugs/how-to-browser --ref <sha> --yes    # pin a revision
 ```
 
 ### Dependency (declared)
